@@ -52,27 +52,51 @@ src/stock_screener/
 
 ## Usage
 
+### API Usage
+
+The application now includes a FastAPI-based REST API for easy integration and automation.
+
 1. **Activate the Poetry shell**:
    ```bash
    poetry shell
    ```
 
-2. **Run the stock symbol scraper**:
+2. **Run the API server**:
+   ```bash
+   python -m src.stock_screener.stock_screener
+   ```
+   The API will be available at `http://localhost:8000`
+
+3. **API Endpoints**:
+   - `GET /health` - Health check
+   - `POST /grab-csvs` - Download stock CSV files
+   - `POST /populate-stocks` - Populate stocks table from CSV files
+   - `POST /populate-valuation-references` - Calculate valuation references
+   - `POST /populate-valuation-snapshots` - Generate valuation snapshots
+
+4. **API Documentation**:
+   Visit `http://localhost:8000/docs` for interactive API documentation.
+
+### Command Line Usage
+
+Alternatively, you can use the individual scripts:
+
+1. **Run the stock symbol scraper**:
    ```bash
    python -m src.stock_screener.screening_script
    ```
 
-3. **Save stocks to database**:
+2. **Save stocks to database**:
    ```bash
    python -m src.stock_screener.stock_symbols.save_stocks_to_sql
    ```
 
-4. **Save valuation references**:
+3. **Save valuation references**:
    ```bash
    python -m src.stock_screener.value_references.save_value_references_to_sql
    ```
 
-5. **Save valuation snapshots**:
+4. **Save valuation snapshots**:
    ```bash
    python -m src.stock_screener.valuation_snapshot.save_valuation_snapshots
    ```
@@ -99,7 +123,13 @@ A materialized view `mv_discounted_latest` provides the latest discounted stocks
 
 ## Development
 
-The supporting modules and packages are ready, but the main orchestrating engine and API interface are still under development.
+The application includes both command-line scripts and a REST API for stock screening operations. The supporting modules and database schema are fully implemented.
+
+### Running Tests
+
+```bash
+poetry run pytest
+```
 
 ## License
 
